@@ -62,7 +62,7 @@ const updateContact = async (contactId, { name, phone, email }) => {
   if (idx === -1) {
     return null
   }
-  contacts[idx] = { contactId, name, phone, email }
+  contacts[idx] = { id: contactId, name, phone, email }
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2))
 
   return contacts[idx]
