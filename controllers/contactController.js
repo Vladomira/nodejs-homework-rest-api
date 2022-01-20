@@ -64,7 +64,6 @@ const updateContactById = async (req, res, next) => {
       throw new BadRequest(error.message)
     }
     const { contactId } = req.params
-    // const { _id } = req.user
 
     const updateContact = await Contact.findByIdAndUpdate(
       contactId,
@@ -117,9 +116,10 @@ const deleteContactById = async (req, res, next) => {
   try {
     const { contactId } = req.params
     const { _id } = req.user
-    const deleteContact = await Contact.findByIdAndRemove(contactId, {
+    const deleteContact = await Contact.findOneAndRemove(contactId, {
       owner: _id,
     })
+    // .findByIdAndRemove(contactId)
 
     if (!deleteContact) {
       throw new NotFound()
