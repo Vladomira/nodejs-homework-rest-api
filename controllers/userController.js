@@ -33,7 +33,7 @@ const signupUser = async (req, res, next) => {
       email,
       subscription,
     })
-    console.log()
+
     res.status(201).json({
       user: {
         email: newUser.email,
@@ -52,9 +52,8 @@ const loginUser = async (req, res, next) => {
     if (error) {
       throw new BadRequest(error.message)
     }
-    const { email, password, subscription } = req.body
+    const { email, password } = req.body
     const user = await User.findOne({ email })
-
     if (!user) {
       throw new Unauthorized('Email is wrong')
     }
@@ -73,8 +72,8 @@ const loginUser = async (req, res, next) => {
     res.json({
       token,
       user: {
-        email,
-        subscription,
+        email: user.email,
+        subscription: user.subscription,
       },
     })
   } catch (error) {
